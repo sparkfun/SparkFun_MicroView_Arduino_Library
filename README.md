@@ -1,29 +1,47 @@
-MicroView
-=============
+SparkFun MicroView Arduino Library
+========================================
 
-![MicroView](https://cdn.sparkfun.com//assets/parts/9/8/4/5/Micro_View-01.jpg)
+![MicroView](https://cdn.sparkfun.com//assets/parts/9/8/4/5/Microview_Action.jpg)
 
-[*SparkFun Microview (DEV-12923)*](https://www.sparkfun.com/products/12923)
+[*SparkFun MicroView (DEV-12923)*](https://www.sparkfun.com/products/12923)
 
-The MicroView is a chip-sized Arduino with a built-in OLED. Compatible with the MicroView USB Programmer linked below. 
+An Arduino library for the MicroView - a chip-sized Arduino with a built-in OLED, available from SparkFun Electronics
 
 Repository Contents
 -------------------
-* **/Datasheets** - Datasheets for the OLED module
-* **/Enclosure** - 3D model of the standard Microview Enclosure
-* **/Fritzing** - Fritzing diagram of the MicroView
-* **/Hardware** - All Eagle design files (.brd, .sch)
-* **/Libraries** - All Arduino libraries and board examples
-* **/Production** - Test bed files and production panel files
 
-Product Versions
-----------------
-* [DEV-12923](https://www.sparkfun.com/products/12923)- Version 1.0
-* [DEV-12924](https://www.sparkfun.com/products/12924)- MicroView USB Programmer version 0.2
+* **/examples** - Example sketches for the library (.ino). Run these from the Arduino IDE.
+* **/extras** - Additional documentation for the user. These files are ignored by the IDE.
+* **/src** - Source files for the library (.cpp, .h).
+* **keywords.txt** - Keywords from this library that will be highlighted in the Arduino IDE.
+* **library.properties** - General library properties for the Arduino package manager.
+
+Documentation
+--------------
+
+* **[Installing an Arduino Library Guide](https://learn.sparkfun.com/tutorials/installing-an-arduino-library)** - Basic information on how to install an Arduino library.
+* **[Product Repository](https://github.com/sparkfun/MicroView/tree/v10)** - Main repository (including hardware files) for the MicroView.
+* **[Learn Microview](http://learn.microview.io/)** - Beginners tutorial for the MicroView.
+
+Products that use this Library
+---------------------------------
+
+* [MicroView](https://www.sparkfun.com/products/12923)- The MicroView is a chip-sized Arduino with a built-in OLED, available from SparkFun Electronics
+
+Version History
+---------------
+
+* [TODO](TODO) - Description
 
 License Information
 -------------------
-The hardware is released under [Creative Commons ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
-The code is beerware; if you see me (or any other SparkFun employee) at the local, and you've found our code helpful, please buy us a round!
+
+This product is _**open source**_!
+
+The **code** is beerware; if you see me (or any other SparkFun employee) at the local, and you've found our code helpful, please buy us a round!
+
+Please use, reuse, and modify these files as you see fit. Please maintain attribution to SparkFun Electronics and release anything derivative under the same license.
 
 Distributed as-is; no warranty is given.
+
+- Your friends at SparkFun.
