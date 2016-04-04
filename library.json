@@ -1,0 +1,14 @@
+{
+  "name": "SparkFun_MicroView",
+  "keywords": "display, oled",
+  "description": "The MicroView is a chip-sized Arduino with a built-in OLED, available from SparkFun Electronics",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/sparkfun/SparkFun_MicroView_Arduino_Library.git"
+  },
+  "exclude": "extras",
+  "version": "1.0.1",
+  "frameworks": "arduino",
+  "platforms": "atmelavr"
+}
