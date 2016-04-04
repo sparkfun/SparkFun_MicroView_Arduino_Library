@@ -5,7 +5,7 @@
   "repository":
   {
     "type": "git",
-    "url": "https://github.com/sparkfun/MicroView.git"
+    "url": "https://github.com/sparkfun/SparkFun_MicroView_Arduino_Library.git"
   },
   "exclude": "extras",
   "version": "1.0.1",
