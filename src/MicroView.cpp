@@ -932,6 +932,16 @@ uint8_t *MicroView::getScreenBuffer(void) {
 	return screenmemory;
 }
 
+/*
+Draw Bitmap image on screen. The array for the bitmap can be stored in the Arduino file, so user don't have to mess with the library files.
+To use, create uint8_t array that is 64x48 pixels (384 bytes). Then call .drawBitmap and pass it the array.
+*/
+void MicroView::drawBitmap(uint8_t * bitArray)
+{
+  for (int i=0; i<(LCDWIDTH * LCDHEIGHT / 8); i++)
+    screenmemory[i] = bitArray[i];
+}
+
 /** \brief Parse command.
 
 	Command stored in serCmd array will be parsed to performed draw functions.
