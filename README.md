@@ -31,7 +31,9 @@ Products that use this Library
 Version History
 ---------------
 
-* [TODO](TODO) - Description
+* [V_0.0.0](https://github.com/sparkfun/SparkFun_MicroView_Arduino_Library/tree/V_1.0.0) - Release
+* [V_1.0.1](https://github.com/sparkfun/SparkFun_MicroView_Arduino_Library/tree/V_1.0.1) - Cleanup
+* [V_1.0.2](https://github.com/sparkfun/SparkFun_MicroView_Arduino_Library/tree/V_1.0.2) - Implemented drawBitmap
 
 License Information
 -------------------
