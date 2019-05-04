@@ -21,7 +21,9 @@ Documentation
 
 * **[Installing an Arduino Library Guide](https://learn.sparkfun.com/tutorials/installing-an-arduino-library)** - Basic information on how to install an Arduino library.
 * **[Product Repository](https://github.com/sparkfun/MicroView/tree/v10)** - Main repository (including hardware files) for the MicroView.
-* **[Learn Microview](http://learn.microview.io/)** - Beginners tutorial for the MicroView.
+* **[Microview Hookup Guide](https://learn.sparkfun.com/tutorials/microview-hookup-guide/all)** - Beginners tutorial for the MicroView.
+* **[Microview Inventor kit](https://learn.sparkfun.com/tutorials/sparkfun-inventors-kit-for-microview/all#experiment-1-blinking-an-led)** - Plugin some hardware to the MicroView.
+* **[Microview in Platformio](https://platformio.org/lib/show/260/SparkFun_MicroView)** - How to use Platformio with the MicroView.
 
 Products that use this Library
 ---------------------------------

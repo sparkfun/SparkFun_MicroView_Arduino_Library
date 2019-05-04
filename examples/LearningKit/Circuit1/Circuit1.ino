@@ -1,3 +1,4 @@
+#include <Arduino.h>
 int LED = A3;				// declare LED as pin A3 of MicroView
 
 void setup()

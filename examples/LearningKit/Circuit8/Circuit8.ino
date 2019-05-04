@@ -17,37 +17,6 @@ void setup()
 	pinMode(buzzerPin, OUTPUT);
 }
 
-void loop() 
-{
-	int i, duration;
-
-	for (i = 0; i < songLength; i++) // step through the song arrays
-	{
-		duration = beats[i] * tempo;  // length of note/rest in ms
-		
-		if (notes[i] == ' ')          // is this a rest? 
-		{
-			uView.print(" ");
-			uView.display();
-			delay(duration);            // then pause for a moment
-		}
-		else                          // otherwise, play the note
-		{
-			uView.print(notes[i]);
-			uView.display();
-			tone(buzzerPin, frequency(notes[i]), duration);
-			delay(duration);            // wait for tone to finish
-		}
-		delay(tempo/10);              // brief pause between notes
-	}
-
-	// We only want to play the song once, so we'll pause forever:
-	while(true){}
-	// If you'd like your song to play over and over,
-	// remove the above statement
-}
-
-
 int frequency(char note) 
 {
 	// This function takes a note character (a-g), and returns the
@@ -79,4 +48,34 @@ int frequency(char note)
 	}
 	return(0);  // We looked through everything and didn't find it,
 	// but we still need to return a value, so return 0.
+}
+
+void loop() 
+{
+	int i, duration;
+
+	for (i = 0; i < songLength; i++) // step through the song arrays
+	{
+		duration = beats[i] * tempo;  // length of note/rest in ms
+		
+		if (notes[i] == ' ')          // is this a rest? 
+		{
+			uView.print(" ");
+			uView.display();
+			delay(duration);            // then pause for a moment
+		}
+		else                          // otherwise, play the note
+		{
+			uView.print(notes[i]);
+			uView.display();
+			tone(buzzerPin, frequency(notes[i]), duration);
+			delay(duration);            // wait for tone to finish
+		}
+		delay(tempo/10);              // brief pause between notes
+	}
+
+	// We only want to play the song once, so we'll pause forever:
+	while(true){}
+	// If you'd like your song to play over and over,
+	// remove the above statement
 }
