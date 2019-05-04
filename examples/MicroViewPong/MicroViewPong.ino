@@ -62,13 +62,6 @@ float ballPosY = LCDHEIGHT / 2.0;
 float ballVelX = -1.0 * ballSpeedX;
 float ballVelY = 0;
 
-void setup()
-{
-  initializeGraphics();
-  initializeInput();
-  displayGameStart();
-}
-
 void resetGame()
 {
   player2Score = 0;
@@ -94,6 +87,12 @@ void initializeInput()
   pinMode(player2Pin, INPUT);
 }
 
+void renderString(int x, int y, String string)
+{
+  uView.setCursor(x, y);
+  uView.print(string);
+}
+
 void displayGameStart()
 {
   uView.clear(PAGE);
@@ -103,26 +102,11 @@ void displayGameStart()
   delay(startDelay);
 }
 
-void loop()
+void setup()
 {
-  updateGame();
-  renderGame();
-
-  if (player1Score >= scoreToWin)
-  {
-    gameOver(true);
-  }
-  else if (player2Score >= scoreToWin)
-  {
-    gameOver(false);
-  }
-}
-
-void updateGame()
-{
-  updatePlayer1();
-  updatePlayer2();
-  updateBall();
+  initializeGraphics();
+  initializeInput();
+  displayGameStart();
 }
 
 float clampPaddlePosY(float paddlePosY)
@@ -220,23 +204,18 @@ void updateBall()
   }
 }
 
-void renderGame()
+void updateGame()
 {
-  uView.clear(PAGE);
-
-  renderScores(player1Score, player2Score);
-  renderPaddle(player1PosX, player1PosY);
-  renderPaddle(player2PosX, player2PosY);
-  renderBall(ballPosX, ballPosY);
-
-  uView.display();
-  delay(renderDelay);
+  updatePlayer1();
+  updatePlayer2();
+  updateBall();
 }
 
-void renderString(int x, int y, String string)
+
+void renderScores(int firstScore, int secondScore)
 {
-  uView.setCursor(x, y);
-  uView.print(string);
+  renderString(10, 0, String(firstScore));
+  renderString(LCDWIDTH - 14, 0, String(secondScore));
 }
 
 void renderPaddle(int x, int y)
@@ -253,10 +232,17 @@ void renderBall(int x, int y)
   uView.circle(x, y, 2);
 }
 
-void renderScores(int firstScore, int secondScore)
+void renderGame()
 {
-  renderString(10, 0, String(firstScore));
-  renderString(LCDWIDTH - 14, 0, String(secondScore));
+  uView.clear(PAGE);
+
+  renderScores(player1Score, player2Score);
+  renderPaddle(player1PosX, player1PosY);
+  renderPaddle(player2PosX, player2PosY);
+  renderBall(ballPosX, ballPosY);
+
+  uView.display();
+  delay(renderDelay);
 }
 
 void gameOver(bool didWin)
@@ -290,3 +276,17 @@ void gameOver(bool didWin)
   displayGameStart();
 }
 
+void loop()
+{
+  updateGame();
+  renderGame();
+
+  if (player1Score >= scoreToWin)
+  {
+    gameOver(true);
+  }
+  else if (player2Score >= scoreToWin)
+  {
+    gameOver(false);
+  }
+}

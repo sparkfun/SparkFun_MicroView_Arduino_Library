@@ -41,12 +41,6 @@ void setup()
 	uView.display();  
 }
 
-void loop()
-{
-	drawCube();
-	delay(ROTATION_SPEED);
-}
-
 void drawCube()
 {
 	r[0]=r[0]+PI/180.0; // Add a degree
@@ -85,4 +79,10 @@ void drawCube()
 	uView.line(p2x[7],p2y[7],p2x[4],p2y[4]);
 	uView.line(p2x[3],p2y[3],p2x[7],p2y[7]);
 	uView.display();
+}
+
+void loop()
+{
+	drawCube();
+	delay(ROTATION_SPEED);
 }

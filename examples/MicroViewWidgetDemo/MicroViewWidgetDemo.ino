@@ -32,6 +32,136 @@ void setup() {
   uView.begin();
 }
 
+// Function to update widget1
+void update1widget(int16_t val) {
+  widget1->setValue(val);
+}
+
+// Function to update widget1 and widget2
+void update2widgets(int16_t val) {
+  widget1->setValue(val);
+  widget2->setValue(val);
+}
+
+// Update function for Demo 8
+void customSlider0(int16_t val) {
+  widget1->setValue(val);
+  uView.setCursor(widget1->getX() + 34, widget1->getY() + 1);
+  uView.print("0x");
+  if (val < 0x10) { // add leading 0 if necessary. Only 2 digits supported.
+    uView.print('0');
+  }
+  uView.print(val, HEX);
+}
+
+// Update function for Demo 9
+void customSlider1(int16_t val) {
+  widget1->setValue(val);
+  uint8_t offsetY = widget1->getY() - 10;
+  uint8_t offsetX = widget1->getX() + 14;
+  uView.setCursor(offsetX, offsetY);
+  uView.print("      "); // erase the previous value in case it's longer
+  // calculate the offset to centre the value
+  offsetX += ((widget1->getMaxValLen() - widget1->getValLen()) * 3);
+  uView.setCursor(offsetX, offsetY);
+  uView.print(val);
+}
+
+// Update function for Demo 10
+void customSlider2(int16_t val) {
+  uView.setCursor(widget1->getX() + 1, widget1->getY() + 24);
+  widget1->drawNumValue(val);
+  // calculate to reverse the pointer direction
+  widget1->setValue((int16_t) ((int32_t) widget1->getMaxValue() +
+                               (int32_t) widget1->getMinValue() -
+                               (int32_t) val));
+}
+
+// Update function for Demo 11
+void customSlider3(int16_t val) {
+  int16_t maxVal = widget1->getMaxValue();
+  uint16_t range = (uint16_t) (maxVal - widget1->getMinValue());
+  uint8_t offsetX = widget1->getX() + 9;
+
+  // erase previous value.
+  // pointer position is calculated the same way as the widget code.
+  uint8_t offsetY = (float)(uint16_t)(maxVal - prevVal) / (float)range * 40;
+  uView.setCursor(offsetX, offsetY);
+  uView.print("  "); // This is being lazy. Should calculate width for value.
+
+  // draw new value
+  offsetY = (float)(uint16_t)(maxVal - val) / (float)range * 40;
+  uView.setCursor(offsetX, offsetY);
+  widget1->drawNumValue(val);
+
+  widget1->setValue(val);
+}
+
+// Update function for Demo 12
+void customGauge0(int16_t val) {
+  widget1->setValue(val);
+
+  uView.setCursor(widget1->getX() - 17, widget1->getY() + 19);
+  uView.setFontType(1);
+  // add leading space if necessary, to right justify.
+  // only 2 digit (plus decimal) numbers are supported.
+  if (val < 100) {
+    uView.print(' ');
+  }
+  uView.print((float)val / 10, 1);
+  uView.setFontType(0);
+}
+
+// Update function for Demo 13
+void customGauge1(int16_t val) {
+  widget1->setValue(val);
+  uView.setCursor(widget1->getX() - 2, widget1->getY() + 9);
+  uView.print((char)(val + 'A' - 1));
+}
+
+// Clear the screen buffer and draw the demo number in the corner
+void demoNumber(int num) {
+  uView.clear(PAGE);
+  uView.setCursor(0, 0);
+  uView.print(num);
+  uView.print(":");
+}
+
+// Spin up, then down, through the values.
+//
+// For each value, call the update function and display the new screen.
+void spin(int16_t lowVal, int16_t highVal, int16_t stepSize,
+          unsigned long stepDelay, void (*drawFunction)(int16_t val)) {
+  drawFunction(lowVal);
+  uView.display();
+  prevVal = lowVal;
+  delay(1500);
+
+  for (int16_t i = lowVal + stepSize; i <= highVal; i += stepSize) {
+    drawFunction(i);
+    uView.display();
+    prevVal = i;
+    delay(stepDelay);
+    if ((i == 0) && (lowVal != 0)) { // pause briefly for a value of 0
+      delay(750);
+    }
+  }
+
+  delay(1500);
+
+  for (int16_t i = highVal; i >= lowVal; i -= stepSize) {
+    drawFunction(i);
+    uView.display();
+    prevVal = i;
+    delay(stepDelay);
+    if ((i == 0) && (lowVal != 0)) { // pause briefly for a value of 0
+      delay(750);
+    }
+  }
+
+  delay(1500);
+}
+
 void loop() {
   /*  ==================== Demo 1 ====================
       Horizontal slider style 0, with and without numeric value.
@@ -221,134 +351,3 @@ void loop() {
 
 /* ================== end of loop() ================== */
 }
-
-// Function to update widget1
-void update1widget(int16_t val) {
-  widget1->setValue(val);
-}
-
-// Function to update widget1 and widget2
-void update2widgets(int16_t val) {
-  widget1->setValue(val);
-  widget2->setValue(val);
-}
-
-// Update function for Demo 8
-void customSlider0(int16_t val) {
-  widget1->setValue(val);
-  uView.setCursor(widget1->getX() + 34, widget1->getY() + 1);
-  uView.print("0x");
-  if (val < 0x10) { // add leading 0 if necessary. Only 2 digits supported.
-    uView.print('0');
-  }
-  uView.print(val, HEX);
-}
-
-// Update function for Demo 9
-void customSlider1(int16_t val) {
-  widget1->setValue(val);
-  uint8_t offsetY = widget1->getY() - 10;
-  uint8_t offsetX = widget1->getX() + 14;
-  uView.setCursor(offsetX, offsetY);
-  uView.print("      "); // erase the previous value in case it's longer
-  // calculate the offset to centre the value
-  offsetX += ((widget1->getMaxValLen() - widget1->getValLen()) * 3);
-  uView.setCursor(offsetX, offsetY);
-  uView.print(val);
-}
-
-// Update function for Demo 10
-void customSlider2(int16_t val) {
-  uView.setCursor(widget1->getX() + 1, widget1->getY() + 24);
-  widget1->drawNumValue(val);
-  // calculate to reverse the pointer direction
-  widget1->setValue((int16_t) ((int32_t) widget1->getMaxValue() +
-                               (int32_t) widget1->getMinValue() -
-                               (int32_t) val));
-}
-
-// Update function for Demo 11
-void customSlider3(int16_t val) {
-  int16_t maxVal = widget1->getMaxValue();
-  uint16_t range = (uint16_t) (maxVal - widget1->getMinValue());
-  uint8_t offsetX = widget1->getX() + 9;
-
-  // erase previous value.
-  // pointer position is calculated the same way as the widget code.
-  uint8_t offsetY = (float)(uint16_t)(maxVal - prevVal) / (float)range * 40;
-  uView.setCursor(offsetX, offsetY);
-  uView.print("  "); // This is being lazy. Should calculate width for value.
-
-  // draw new value
-  offsetY = (float)(uint16_t)(maxVal - val) / (float)range * 40;
-  uView.setCursor(offsetX, offsetY);
-  widget1->drawNumValue(val);
-
-  widget1->setValue(val);
-}
-
-// Update function for Demo 12
-void customGauge0(int16_t val) {
-  widget1->setValue(val);
-  
-  uView.setCursor(widget1->getX() - 17, widget1->getY() + 19);
-  uView.setFontType(1);
-  // add leading space if necessary, to right justify.
-  // only 2 digit (plus decimal) numbers are supported.
-  if (val < 100) {
-    uView.print(' ');
-  }
-  uView.print((float)val / 10, 1);
-  uView.setFontType(0);
-}
-
-// Update function for Demo 13
-void customGauge1(int16_t val) {
-  widget1->setValue(val);
-  uView.setCursor(widget1->getX() - 2, widget1->getY() + 9);
-  uView.print((char)(val + 'A' - 1));
-}
-
-// Clear the screen buffer and draw the demo number in the corner
-void demoNumber(int num) {
-  uView.clear(PAGE);
-  uView.setCursor(0, 0);
-  uView.print(num);
-  uView.print(":");
-}
-
-// Spin up, then down, through the values.
-//
-// For each value, call the update function and display the new screen.
-void spin(int16_t lowVal, int16_t highVal, int16_t stepSize,
-          unsigned long stepDelay, void (*drawFunction)(int16_t val)) {
-  drawFunction(lowVal);
-  uView.display();
-  prevVal = lowVal;
-  delay(1500);
-
-  for (int16_t i = lowVal + stepSize; i <= highVal; i += stepSize) {
-    drawFunction(i);
-    uView.display();
-    prevVal = i;
-    delay(stepDelay);
-    if ((i == 0) && (lowVal != 0)) { // pause briefly for a value of 0
-      delay(750);
-    }
-  }
-
-  delay(1500);
-
-  for (int16_t i = highVal; i >= lowVal; i -= stepSize) {
-    drawFunction(i);
-    uView.display();
-    prevVal = i;
-    delay(stepDelay);
-    if ((i == 0) && (lowVal != 0)) { // pause briefly for a value of 0
-      delay(750);
-    }
-  }
-
-  delay(1500);
-}
-

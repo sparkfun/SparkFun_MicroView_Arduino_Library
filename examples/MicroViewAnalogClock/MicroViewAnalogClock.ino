@@ -10,6 +10,8 @@ Turn your MicroView into an analog clock!
 This sketch requires the Arduino time library. Get it from
 here: http://playground.arduino.cc/Code/Time
 
+If you are using Platformio, install the Time library with
+   pio lib install "Time"
 
 Development environment specifics:
 	IDE: Arduino 1.6.0
@@ -28,23 +30,50 @@ Distributed as-is; no warranty is given.
 // This is the radius of the clock:
 #define CLOCK_SIZE 23
 
-// Use these defines to set the clock's begin time
-#define HOUR 10
-#define MINUTE 02
-#define SECOND 00
-#define DAY 28
-#define MONTH 2
-#define YEAR 2015
-
 const uint8_t maxW = uView.getLCDWidth();
 const uint8_t midW = maxW/2;
 const uint8_t maxH = uView.getLCDHeight();
 const uint8_t midH = maxH/2;
 
+// Draw the clock face. That includes the circle outline and
+// the 12, 3, 6, and 9 text.
+void drawFace()
+{
+  uView.setFontType(0); // set font type 0 (Smallest)
+
+  uint8_t fontW = uView.getFontWidth();
+  uint8_t fontH = uView.getFontHeight();
+
+  //uView.setCursor(27, 0); // points cursor to x=27 y=0
+  uView.setCursor(midW-fontW-1, midH-CLOCK_SIZE+1);
+  uView.print(12);  // Print the "12"
+  uView.setCursor(midW-(fontW/2)-1, midH+CLOCK_SIZE-fontH-1);
+  uView.print(6);  // Print the "6"
+  uView.setCursor(midW-CLOCK_SIZE+1, midH-fontH/2);
+  uView.print(9);  // Print the "9"
+  uView.setCursor(midW+CLOCK_SIZE-fontW-2, midH-fontH/2);
+  uView.print(3);  // Print the "3"
+  uView.circle(midW-1, midH-1, CLOCK_SIZE);
+
+  //Draw the clock
+  uView.display();
+}
+
 void setup()
 {
+  int year, month, day, hour, minute, second;
+
+  // Random trick on Arduino from
+  // https://programmingelectronics.com/using-random-numbers-with-arduino/
+  randomSeed(analogRead(A0));
+  hour = random(12);
+  minute = random(60);
+  second = random(60);
+  day = random(1,32);
+  month = random(1,13);
+  year = random(2015,2066);
   // Set the time in the time library:
-  setTime(HOUR, MINUTE, SECOND, DAY, MONTH, YEAR);
+  setTime(hour, minute, second, day, month, year);
 
   uView.begin();    // set up the MicroView
   uView.clear(PAGE);// erase hardware memory inside the OLED
@@ -52,11 +81,6 @@ void setup()
 
   // Draw clock face (circle outline & text):
   drawFace();
-}
-
-void loop() 
-{
-  drawTime();
 }
 
 void drawTime()
@@ -105,26 +129,7 @@ void drawTime()
   }
 }
 
-// Draw the clock face. That includes the circle outline and
-// the 12, 3, 6, and 9 text.
-void drawFace()
+void loop()
 {
-  uView.setFontType(0); // set font type 0 (Smallest)
-  
-  uint8_t fontW = uView.getFontWidth();
-  uint8_t fontH = uView.getFontHeight();
-  
-  //uView.setCursor(27, 0); // points cursor to x=27 y=0
-  uView.setCursor(midW-fontW-1, midH-CLOCK_SIZE+1);
-  uView.print(12);  // Print the "12"
-  uView.setCursor(midW-(fontW/2)-1, midH+CLOCK_SIZE-fontH-1);
-  uView.print(6);  // Print the "6"
-  uView.setCursor(midW-CLOCK_SIZE+1, midH-fontH/2);
-  uView.print(9);  // Print the "9"
-  uView.setCursor(midW+CLOCK_SIZE-fontW-2, midH-fontH/2);
-  uView.print(3);  // Print the "3"
-  uView.circle(midW-1, midH-1, CLOCK_SIZE);
-  
-  //Draw the clock
-  uView.display();
+  drawTime();
 }

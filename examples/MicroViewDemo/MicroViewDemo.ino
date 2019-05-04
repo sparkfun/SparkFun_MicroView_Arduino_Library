@@ -15,6 +15,12 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+/***********************************************************
+* If you are using Platformio, install the Time library with
+*   pio lib install "Time"
+************************************************************/
+
 #include <MicroView.h>
 #include <Time.h>
 
@@ -31,7 +37,7 @@ void setup() {
 	uView.clear(PAGE);	// erase the memory buffer, when next uView.display() is called, the OLED will be cleared.
 }
 
-void displayConnect(char * value, char * text) {
+void displayConnect(const char * value, const char * text) {
 	int y=0;
 	uView.clear(PAGE);
 	uView.setCursor(0,y);
@@ -47,7 +53,7 @@ void displayConnect(char * value, char * text) {
 	uView.display();
 }
 
-void displayRemove(char * text) {
+void displayRemove(const char * text) {
 	int y=0;
 	uView.clear(PAGE);
 	uView.setCursor(0,y);
@@ -127,7 +133,7 @@ void drawPin(int pin) {
 }
 
 void fromPinToPin(int pin1, int pin2) {
-	int x1,y1,x2,y2;
+	int x1, y1, x2;
 	x1=getXpos(pin1);
 	y1=getYpos(pin1);
 	x2=getXpos(pin2);
@@ -617,5 +623,3 @@ void loop() {
 	displayEnd();
 	uView.clear(PAGE);
 }
-
-

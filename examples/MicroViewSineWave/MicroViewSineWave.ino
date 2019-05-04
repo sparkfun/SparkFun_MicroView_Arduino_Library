@@ -24,7 +24,7 @@ void setup() {
 
 void loop () {
   int i;
-  float rad,srad, x,y;
+  float x,y;
   int amp=20;
   int nPhase=360;
 
